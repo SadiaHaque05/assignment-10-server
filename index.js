@@ -104,6 +104,15 @@ async function run() {
       res.send(favorites);
     });
 
+    app.post("/arts/:id/like", async (req, res) => {
+      const id = req.params.id;
+      const result = await artsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $inc: { likes: 1 } }
+      );
+      res.send(result);
+    });
+
     app.delete("/arts/:id", async (req, res) => {
       const id = req.params.id;
       const result = await artsCollection.deleteOne({ _id: new ObjectId(id) });
