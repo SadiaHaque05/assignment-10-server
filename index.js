@@ -34,6 +34,17 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/arts", async (req, res) => {
+      const newArt = {
+        ...req.body,
+        createdAt: new Date(),
+        likes: 0,
+        favorites: [],
+      };
+      const result = await artsCollection.insertOne(newArt);
+      res.send(result);
+    });
+
     app.get("/arts/all", async (req, res) => {
       const cursor = await artsCollection
         .find()
