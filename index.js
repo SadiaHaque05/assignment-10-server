@@ -113,6 +113,18 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/arts/:id/unlike", async (req, res) => {
+      const { email } = req.body;
+      const id = req.params.id;
+
+      const result = await artsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $pull: { likedBy: email } }
+      );
+
+      res.send(result);
+    });
+
     app.delete("/arts/:id", async (req, res) => {
       const id = req.params.id;
       const result = await artsCollection.deleteOne({ _id: new ObjectId(id) });
