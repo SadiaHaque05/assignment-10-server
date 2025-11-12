@@ -104,6 +104,16 @@ async function run() {
       res.send(favorites);
     });
 
+    app.put("/arts/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedArt = req.body;
+      const result = await artsCollection.updateOne(
+        { _id: new ObjectId(id) },
+        { $set: updatedArt }
+      );
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
