@@ -34,6 +34,15 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/arts/all", async (req, res) => {
+      const cursor = await artsCollection
+        .find()
+        .sort({ _id: -1 })
+        .limit(20)
+        .toArray();
+      res.send(cursor);
+    });
+
     app.get("/arts", async (req, res) => {
       const cursor = artsCollection.find().sort({ _id: -1 }).limit(6);
       const result = await cursor.toArray();
